@@ -28,8 +28,8 @@ class App extends Component {
 
                     {/* COMPONENT
                       * Name: Web3_Found_Screen
-                      * Imports: --
-                      * Triggers: --
+                      * Props: --
+                      * States: --
                       * Controls: -- 
                     */}
                     <div class="web3_not_found d-none">
@@ -40,8 +40,8 @@ class App extends Component {
 
                     {/* COMPONENT
                       * Name: Connect_Web3_Screen
-                      * Imports: --
-                      * Triggers: --
+                      * Props: --
+                      * States: --
                       * Controls: connect(), 
                     */}
                     <div class="web3_found d-none">
@@ -52,8 +52,8 @@ class App extends Component {
 
                     {/* COMPONENT
                       * Name: Deposit_Funds_Screen
-                      * Imports: _userAvailableDAI
-                      * Triggers: --
+                      * Props: _userAvailableDAI
+                      * States: --
                       * Controls: deposit(), 
                     */}
                     <div class="deposit_funds d-none">
@@ -70,8 +70,8 @@ class App extends Component {
 
                     {/* COMPONENT
                       * Name: DappRunning_Screen
-                      * Imports: _aaveAPR, _compoundAPR, _winner, _totalEarnings
-                      * Triggers: watchTotalEarnings()
+                      * Props: _aaveAPR, _compoundAPR, _winner, _totalEarnings
+                      * States: watchTotalEarnings()
                       * Controls: rebalance(), withdraw(),
                     */}
                     <div class="running d-none">
@@ -97,8 +97,8 @@ class App extends Component {
 
                     {/* COMPONENT
                       * Name: Rebalancing_Screen
-                      * Imports: _rebalancingMsg, _finishRebalanceBTN
-                      * Triggers: rebalanceCheckingYields(), rebalanceTransferFunds(), rebalanceComplete(), 
+                      * Props: _rebalancingMsg, _finishRebalanceBTN
+                      * States: rebalanceCheckingYields(), rebalanceTransferFunds(), rebalanceComplete(), 
                     */}
                     <div class="rebalancing d-none">
                       <p class="alert alert-info">Checking for the best Yield.</p> {/* _rebalancingMsg */}
@@ -113,8 +113,8 @@ class App extends Component {
 
                     {/* COMPONENT
                       * Name: Withdraw_Screen
-                      * Imports: _contractBalance
-                      * Controls: withdrawFunds()
+                      * Props: _contractBalance
+                      * States: withdrawFunds()
                     */}
                     <div class="withdraw ">
                       <p class="alert alert-success">12345 DAI Available</p> {/* _contractBalance */}
