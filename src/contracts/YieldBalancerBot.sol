@@ -11,5 +11,19 @@ contract YieldBalancerBot {
 	// 	"This function is restricted to the contract's owner"
 	// 	);
 	// };
+	
+	function deposit() {
+		//from = msg.sender;
+	}
+
+	function withdraw() {
+		//to = msg.sender;
+	}
+
+	// function fill(pool) {
+	// 	//to = pool;
+	// }
+
+
 
 }
