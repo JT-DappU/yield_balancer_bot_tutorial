@@ -2,26 +2,52 @@ import React, { Component } from 'react';
 import logo from '../images/coin.png';
 import './App.css';
 
+//IMPORT ABIs FROM POOLS LIST
+import ABI_aavePool from './src/abis/pools.js';
+import ABI_compoundPool from './src/abis/pools.js';
+
+//POOL CONTRACTS
+const aaveContract = new web3.eth.Contract(ABI_aavePool, process.env.AAVE_POOL_CONTRACT, {
+    from: process.env.CONTRACT_ADDRESS, // default from address
+    gasPrice: process.env.DEFAULT_GAS_PRICE // default gas price in wei
+});
+
+const compoundContract = new web3.eth.Contract(ABI_compoundPool, process.env.COMPOUND_POOL_CONTRACT, {
+    from: process.env.CONTRACT_ADDRESS, // default from address
+    gasPrice: process.env.DEFAULT_GAS_PRICE // default gas price in wei
+});
+
 //WINDOW
 const dappScreen = document.querySelector('.dappScreen');
 
 //SCREENS
+const no_web3 = document.querySelector('.no_web3');
+const connect = document.querySelector('.connect');
 const rebalancing = document.querySelector('.rebalancing');
 const running = document.querySelector('.running');
 const withdraw = document.querySelector('.withdraw');
 
 //PROPS
-_userAvailableDAI = 
-_aaveAPR =
+_userAvailableDAI = // web3.account.balance
+
+_aaveAPR = //https://aave-api-v2.aave.com/data/pools return.
 _compoundAPR =
-_rebalancingMsg =
+
 _winner =
 _totalEarnings =
-_contractBalance =
+
+_rebalancingMsg =
 _finishRebalanceBTN =
+
+_contractBalance =
 
 //STATES
 function rebalancing_CheckingYields() {
+  
+  _rebalancingMsg = "Checking Yeild Rates";
+
+  //Why do they call it "Reserve Data"
+  _aaveAPR = async await aaveContract.getReserveData(process.env.DAI_ADDRESS).currentStableBorrowRate;
 
 }
 function rebalancing_TransferFunds() {
@@ -35,20 +61,39 @@ function rebalancing_Complete() {
 async function connect() {
   accountsArray = await ethereum.request({ method: 'eth_requestAccounts' });
   global const userAccount = accountsArray[0]; //GET THE FIRST ACCOUNT IN THE ARRAY
-  dappScreen.innerHTML = running;
+  dappScreen.innerHTML = running; //IMPLEMENT REACT?
 }
 
 async function deposit() {
-  
+
+  //Default Deposit Variables
+  asset = process.env.DAI_ADDRESS //Set the Token as DAI.
+  amount = _contractBalance //Deposit the Total Balance
+  onBehalfOf = msg.sender; //Tokens should be sent to the caller
+  referralCode = 0; //ENTER DappU here? LOL
+
+  //aaveContract
+  if ( pool === 'AAVE') {
+    aaveContract.deposit(address asset, uint256 amount, address onBehalfOf, uint16 referralCode);
+  };
+
+  //compoundContract
+   if ( pool === 'COMPOUND') {
+    compountContract.deposit(address asset, uint256 amount, address onBehalfOf, uint16 referralCode);
+  };
 }
 
 async function rebalance() {
-
+  async await rebalancing_CheckingYields();
 }
 
 async function withdraw() {
 
 }
+
+//TO INFINITY AND BEYOND
+async function borrow();
+async function repay();
 
 class App extends Component {
   render() {
@@ -82,7 +127,7 @@ class App extends Component {
                       * States: --
                       * Controls: connect(), 
                     */}
-                    <div class="web3_found">
+                    <div class="connect">
                       <p class="alert alert-info">Web3 Ready to Connect</p>
                       <p class="card-text">Connect to the Dapp and get started.</p>
                       <a href="#" onClick="connect()" class="btn btn-primary">Connect to App</a> {/* connect() */}
@@ -94,26 +139,12 @@ class App extends Component {
                       * States: --
                       * Controls: -- 
                     */}
-                    <div class="web3_not_found">
+                    <div class="no-web3">
                       <p class="alert alert-danger">Web3 Connection Not Found</p>
                       <p class="card-text">Please download MetaMask to continue.</p>
                       <a href="#" class="btn btn-warning">Download MetaMask</a>
                     </div>
                   }
-
-                    
-
-                    {/* COMPONENT
-                      * Name: Connect_Web3_Screen
-                      * Props: --
-                      * States: --
-                      * Controls: connect(), 
-                    */}
-                    <div class="web3_found d-none">
-                      <p class="alert alert-info">Web3 Ready to Connect</p>
-                      <p class="card-text">Connect to the Dapp and get started.</p>
-                      <a href="#" class="btn btn-primary">Connect to App</a> {/* connect() */}
-                    </div>
 
                     {/* COMPONENT
                       * Name: Deposit_Funds_Screen
@@ -121,7 +152,7 @@ class App extends Component {
                       * States: --
                       * Controls: deposit(), 
                     */}
-                    <div class="deposit_funds d-none">
+                    <div class="deposit">
                       <p class="alert alert-success">12345 DAI Available</p> {/* _userAvailableDai */}
                       <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -139,7 +170,7 @@ class App extends Component {
                       * States: watchTotalEarnings()
                       * Controls: rebalance(), withdraw(),
                     */}
-                    <div class="running d-none">
+                    <div class="running">
                       <p class="card-text">You are currently earning with <span class="winner">AAVE</span>.</p> {/* _winner */}
                       <div class="media">
                         <img src="https://app.compound.finance/compound-components/assets/asset_AAVE.svg" class="col-4" alt="..."/>
@@ -165,7 +196,7 @@ class App extends Component {
                       * Props: _rebalancingMsg, _finishRebalanceBTN
                       * States: rebalanceCheckingYields(), rebalanceTransferFunds(), rebalanceComplete(), 
                     */}
-                    <div class="rebalancing d-none">
+                    <div class="rebalancing">
                       <p class="alert alert-info">Checking for the best Yield.</p> {/* _rebalancingMsg */}
                       <div class="container-fluid p-4">
                         <div class="spinner-border text-info p-5 " role="status" >
@@ -181,7 +212,7 @@ class App extends Component {
                       * Props: _contractBalance
                       * States: withdrawFunds()
                     */}
-                    <div class="withdraw ">
+                    <div class="withdraw">
                       <p class="alert alert-success">12345 DAI Available</p> {/* _contractBalance */}
                       <div class="input-group mb-3">
                         <div class="input-group-prepend">
