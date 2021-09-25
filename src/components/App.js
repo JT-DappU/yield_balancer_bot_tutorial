@@ -2,6 +2,54 @@ import React, { Component } from 'react';
 import logo from '../images/coin.png';
 import './App.css';
 
+//WINDOW
+const dappScreen = document.querySelector('.dappScreen');
+
+//SCREENS
+const rebalancing = document.querySelector('.rebalancing');
+const running = document.querySelector('.running');
+const withdraw = document.querySelector('.withdraw');
+
+//PROPS
+_userAvailableDAI = 
+_aaveAPR =
+_compoundAPR =
+_rebalancingMsg =
+_winner =
+_totalEarnings =
+_contractBalance =
+_finishRebalanceBTN =
+
+//STATES
+function rebalancing_CheckingYields() {
+
+}
+function rebalancing_TransferFunds() {
+
+}
+function rebalancing_Complete() {
+
+}
+
+//CONTROL FUNCTIONS
+async function connect() {
+  accountsArray = await ethereum.request({ method: 'eth_requestAccounts' });
+  global const userAccount = accountsArray[0]; //GET THE FIRST ACCOUNT IN THE ARRAY
+  dappScreen.innerHTML = running;
+}
+
+async function deposit() {
+  
+}
+
+async function rebalance() {
+
+}
+
+async function withdraw() {
+
+}
+
 class App extends Component {
   render() {
     return (
@@ -24,19 +72,36 @@ class App extends Component {
                   <h5 class="card-title pt-3 pb-1">DAI Yield Balancer</h5>
                   <p class="card-text">Please download MetaMask to continue.</p>
                   <img src={logo} class="card-img px-5" alt="..."/>
-                  <div class="card-body">
+                  <div class="card-body window">
 
+                {/* IF METAMASK INSTALLED */}
+                  if (typeof window.ethereum !== 'undefined') {
                     {/* COMPONENT
-                      * Name: Web3_Found_Screen
+                      * Name: Connect_Web3_Screen
+                      * Props: --
+                      * States: --
+                      * Controls: connect(), 
+                    */}
+                    <div class="web3_found">
+                      <p class="alert alert-info">Web3 Ready to Connect</p>
+                      <p class="card-text">Connect to the Dapp and get started.</p>
+                      <a href="#" onClick="connect()" class="btn btn-primary">Connect to App</a> {/* connect() */}
+                    </div>
+                  } else {
+                    {/* COMPONENT
+                      * Name: Web3_NOTFound_Screen
                       * Props: --
                       * States: --
                       * Controls: -- 
                     */}
-                    <div class="web3_not_found d-none">
+                    <div class="web3_not_found">
                       <p class="alert alert-danger">Web3 Connection Not Found</p>
                       <p class="card-text">Please download MetaMask to continue.</p>
                       <a href="#" class="btn btn-warning">Download MetaMask</a>
                     </div>
+                  }
+
+                    
 
                     {/* COMPONENT
                       * Name: Connect_Web3_Screen
