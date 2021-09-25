@@ -30,16 +30,19 @@ const withdraw = document.querySelector('.withdraw');
 //PROPS
 _userAvailableDAI = // web3.account.balance
 
-_aaveAPR = //https://aave-api-v2.aave.com/data/pools return.
-_compoundAPR =
+_aaveAPR = ".01"; //set global by default
+_compoundAPR = ".00"; //set global by default
 
-_winner =
-_totalEarnings =
+_winner = "AAVE"; //Choose AAVE to start
 
-_rebalancingMsg =
-_finishRebalanceBTN =
+_initialDeposit = 0; //FORM INPUT
+_contractBalance = 0; // web3.contract.balance
 
-_contractBalance =
+_totalEarnings = _contractBalance-_initialDeposit; 
+
+_rebalancingMsg = "Starting Rebalancing Process"; // Default start message for rebalance screen
+_finishRebalanceBTN = document.querySelector('.finish');
+
 
 //STATES
 function rebalancing_CheckingYields() {
@@ -67,6 +70,17 @@ function rebalancing_TransferFunds() {
   //UPDATE FRONT END REACT AND STATE CHANGE?
   _rebalancingMsg = "Transfering funds to "+_winner;
 
+  if (_winner === "AAVE") {
+    async await yieldBalancerBot.withdraw(); //Time to set up the contract... 
+    async await yieldBalancerBot.deposit('AAVE');
+  }
+
+  if (_winner === "COMPOUND") {
+    async await yieldBalancerBot.withdraw(); 
+    async await yieldBalancerBot.deposit('COMP');
+  }
+
+  return _winner;
 }
 
 function rebalancing_Complete() {
@@ -95,16 +109,32 @@ async function deposit() {
 
   //compoundContract
    if ( pool === 'COMPOUND') {
-    compountContract.deposit(address asset, uint256 amount, address onBehalfOf, uint16 referralCode);
+    compountContract.deposit(address asset, uint256 amount, address onBehalfOf, uint16 referralCode); //FIX
   };
 }
 
 async function rebalance() {
   async await rebalancing_CheckingYields();
+  async await rebalancing_TransferFunds();
+  async await rebalancing_Complete();
 }
 
-async function withdraw() {
+async function withdraw(contract) {
 
+  //Default Withdraw Variables
+  asset = process.env.DAI_ADDRESS //Set the Token as DAI.
+  amount = _contractBalance //Deposit the Total Balance
+  onBehalfOf = msg.sender; //Tokens should be sent to the caller
+  referralCode = 0; //ENTER DappU here? LOL
+
+  if (contract === "yieldBalancerBot") { //withdraw from contract address
+    yieldBalancerBotContract.withdraw(address asset, uint256 amount, address onBehalfOf, uint16 referralCode); //FIX
+  } else if (contract === "AAVE") { //withdraw from AAVE
+    aaveContract.withdraw(address asset, uint256 amount, address onBehalfOf, uint16 referralCode); //FIX
+  } else if (contract === "COMPOUND") {  //withdraw from COMPOUND
+    compountContract.withdraw(address asset, uint256 amount, address onBehalfOf, uint16 referralCode); //FIX
+  }
+  
 }
 
 //TO INFINITY AND BEYOND
@@ -220,7 +250,7 @@ class App extends Component {
                         </div>
                       </div>
                       <p class="card-text py-2">Please wait while your rebalance is processed.</p>
-                      <a href="#" class="btn btn-primary mt-3 d-none">Continue</a> {/* _finishRebalanceBTN */}
+                      <a href="#" class="btn btn-primary mt-3 d-none finish">Continue</a> {/* _finishRebalanceBTN */}
                     </div>
 
                     {/* COMPONENT
