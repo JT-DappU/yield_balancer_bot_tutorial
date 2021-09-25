@@ -54,17 +54,23 @@ function rebalancing_CheckingYields() {
   apiResponse = fetch("https://api.compound.finance/api/v2/account?addresses[]="+process.env.DAI_ADDRESS);
   _compoundAPR = apiResponse.supply_rate; //What is the difference in Supply Rate and Borrow Rate? Borrow is for staking?
 
-  _winner = 
+  //CALCULATE THE WINNER
+  if (_aave >= _compoundAPR) {
+    _winner = "AAVE";
+  } else {
+    _winner = "COMPOUND";
+  }
 
 }
 function rebalancing_TransferFunds() {
 
   //UPDATE FRONT END REACT AND STATE CHANGE?
-  _rebalancingMsg = "Checking Yeild Rates";
+  _rebalancingMsg = "Transfering funds to "+_winner;
 
 }
-function rebalancing_Complete() {
 
+function rebalancing_Complete() {
+  _rebalancingMsg = "Transfering funds to "+_winner;
 }
 
 //CONTROL FUNCTIONS
