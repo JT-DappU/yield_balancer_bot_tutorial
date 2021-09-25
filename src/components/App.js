@@ -43,14 +43,24 @@ _contractBalance =
 
 //STATES
 function rebalancing_CheckingYields() {
-  
+
+  //UPDATE FRONT END REACT AND STATE CHANGE?
   _rebalancingMsg = "Checking Yeild Rates";
 
-  //Why do they call it "Reserve Data"
+  //YOU CAN GET THE APR VIA SMART CONTRACT
   _aaveAPR = async await aaveContract.getReserveData(process.env.DAI_ADDRESS).currentStableBorrowRate;
+
+  //YOU CAN GET THE APR VIA API ENDPOINT
+  apiResponse = fetch("https://api.compound.finance/api/v2/account?addresses[]="+process.env.DAI_ADDRESS);
+  _compoundAPR = apiResponse.supply_rate; //What is the difference in Supply Rate and Borrow Rate? Borrow is for staking?
+
+  _winner = 
 
 }
 function rebalancing_TransferFunds() {
+
+  //UPDATE FRONT END REACT AND STATE CHANGE?
+  _rebalancingMsg = "Checking Yeild Rates";
 
 }
 function rebalancing_Complete() {
