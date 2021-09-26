@@ -26,7 +26,7 @@ contract YieldBalancerBot {
 	//EVENTS
 	event Deposit( address indexed from, address indexed to, uint256  indexed amount );
 	event Withdraw( address indexed from, address indexed to, uint256 indexed amount );
-	event Fill( string indexed name, address indexed to, uint256 indexed amount );
+	event Fill( string indexed name, address indexed from, uint256 indexed amount );
 	event Drain( string indexed name, address indexed to, uint256 indexed amount ); 
 
 	//ERC-20 Transfer From
@@ -36,24 +36,28 @@ contract YieldBalancerBot {
 	function deposit(address _token, uint _amount) public {
 		//All Deposits come into the contractAccount.
 		transferFrom(address msg.sender, address contractAccount, uint256 _amount)
+		emit deposit(msg.sender, contractAccount, _amount);
 	}
 
 	//Withdraw
 	function withdraw() private {
 		//ALL Withdraws are send to the msg.sender
 		transferFrom(address contractAccount, address msg.sender, uint256 _amount)
+		emit withdraw(msg.sender, contractAccount, _amount);
 	}
 
 	//Fill Pool ???
 	function fill(address _pool, uint _amount, string _name ) {
 		//Pools will be filled by contractAccount
 		transferFrom(address contractAccount, address _pool, uint256 _amount)
+		emit fill(_name, contractAccount, _amount);
 	}
 
 	//Drain Pool ???
 	function drain(address _pool, uint _amount, string _name ) {
 		//Pools will be drained into contractAccount
 		transferFrom(address _pool, address contractAccount, uint256 _amount)
+		emit drain(_name, contractAccount, _amount);
 	}
 
 }
