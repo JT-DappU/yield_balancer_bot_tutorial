@@ -23,8 +23,14 @@ contract YieldBalancerBot {
 	//Track Balances
 	mapping(address => uint256) public balanceOf;
 
+	//EVENTS
+	event Deposit();
+	event Withdraw();
+	event Fill();
+	event Drain(); 
+
 	//ERC-20 Transfer From
-	
+	function transferFrom(address msg.sender, address contractAccount, uint256 _amount) returns public ( bool success)
 	
 	//Deposits
 	function deposit(address _token, uint _amount) public {
@@ -50,7 +56,5 @@ contract YieldBalancerBot {
 		//Pools will be drained into contractAccount
 		transferFrom(address _pool, address contractAccount, uint256 _amount)
 	}
-
-
 
 }
