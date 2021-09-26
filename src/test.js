@@ -2,6 +2,8 @@
 //CONNECT TO CONTRACT
 const contract_yieldBalancerBot = artifacts.require('./contracts/YieldBalancerBot');
 
+//is this  how to add the contract??
+const contract_aavePool = artifacs.require('./contracts/');
 
 //ADD CHAI
 require('chai')
@@ -25,4 +27,14 @@ describe('deployment', ()=> {
 		result.should.equal(contractAccount)
 	})
 })
+
+//CHAI TEST deposit()
+describe('deposits', ()=> {
+	describe('success', () => {
+		it('tracks the deposit', async () => {
+
+		})
+	})
+})
+
 
