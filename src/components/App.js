@@ -4,7 +4,9 @@ import './App.css';
 
 //IMPORT ABIs FROM POOLS LIST
 import ABI_aavePool from './src/abis/pools.js';
-import ABI_compoundPool from './src/abis/pools.js';
+import ABI_compoundPool from './src/abis/pools.js'; 
+
+
 
 //POOL CONTRACTS
 const aaveContract = new web3.eth.Contract(ABI_aavePool, process.env.AAVE_POOL_CONTRACT, {
@@ -60,8 +62,12 @@ function rebalancing_CheckingYields() {
   //CALCULATE THE WINNER
   if (_aave >= _compoundAPR) {
     _winner = "AAVE";
+    await compoundContract.methods.withdraw(DAI, contractAccount, compoundPool_DAI, totalEarnings);
+    await aaveContract.methods.deposit(DAI, contractAccount, aavePool_DAI, totalEarnings);
   } else {
     _winner = "COMPOUND";
+    await aaveContract.methods.withdraw(DAI, contractAccount, aavePool_DAI, totalEarnings);
+    await compoundContract.methods.deposit(DAI, contractAccount, compundPool_DAI, totalEarnings);
   }
 
 }
@@ -134,7 +140,7 @@ async function withdraw(contract) {
   } else if (contract === "COMPOUND") {  //withdraw from COMPOUND
     compountContract.withdraw(address asset, uint256 amount, address onBehalfOf, uint16 referralCode); //FIX
   }
-  
+
 }
 
 //TO INFINITY AND BEYOND

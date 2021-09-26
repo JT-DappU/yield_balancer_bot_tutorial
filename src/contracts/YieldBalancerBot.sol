@@ -1,12 +1,25 @@
 pragma solidity >=0.4.22 <0.9.0;
 
-
+interface IERC20 {
+    function totalSupply() external view returns (uint256);
+    function balanceOf(address account) external view returns (uint256);
+    function transfer(address recipient, uint256 amount) external returns (bool);
+    function allowance(address owner, address spender) external view returns (uint256);
+    function approve(address spender, uint256 amount) external returns (bool);
+    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
+    event Transfer(address indexed from, address indexed to, uint256 value);
+    event Approval(address indexed owner, address indexed spender, uint256 value);
+}
 //import "@openzeppelin/contracts/finance/PaymentSplitter.sol";
+//import "@openzeppelin/contracts/??/OnlyOwner.sol";
+
 
 contract YieldBalancerBot {
 
 	//This account will hold all the funds
-	address public contractAccount;
+	const contractAccount = address public owner;
+	address public contractAccount = address(this);
+	address public DAI = "";
 
 	// modifier restricted() {
 	// 	require(
@@ -15,11 +28,6 @@ contract YieldBalancerBot {
 	// 	);
 	// };
 	
-	//contractAccount created upon deployment
-	constructor( address _contractAccount ) public {
-		contractAccount = _contractAccount;
-	}
-
 	//Track Balances
 	mapping(address => uint256) public balanceOf;
 
@@ -28,36 +36,33 @@ contract YieldBalancerBot {
 	event Withdraw( address indexed from, address indexed to, uint256 indexed amount );
 	event Fill( string indexed name, address indexed from, uint256 indexed amount );
 	event Drain( string indexed name, address indexed to, uint256 indexed amount ); 
-
-	//ERC-20 Transfer From
-	function transferFrom(address _from, address _to, uint256 _amount) returns public ( bool success);
 	
 	//Deposits
 	function deposit(address _token, uint _amount) public {
-		//All Deposits come into the contractAccount.
-		transferFrom(address msg.sender, address contractAccount, uint256 _amount)
-		emit deposit(msg.sender, contractAccount, _amount);
+		uint amount = IERC20(DAI).balanceOf(msg.sender);
+		IERC20(DAI).transferFrom(address msg.sender, address contractAccount, uint256 amount)
+		emit Deposit(msg.sender, contractAccount, amount);
 	}
 
 	//Withdraw
-	function withdraw() private {
-		//ALL Withdraws are send to the msg.sender
-		transferFrom(address contractAccount, address msg.sender, uint256 _amount)
-		emit withdraw(msg.sender, contractAccount, _amount);
+	function withdraw() public onlyOwner {
+		uint amount = IERC20(DAI).balanceOf(contractAccount);
+		IERC20(DAI).transferFrom(address contractAccount, address msg.sender, uint256 amount);
+		emit Withdraw(msg.sender, contractAccount, amount);
 	}
 
 	//Fill Pool ???
 	function fill(address _pool, uint _amount, string _name ) {
-		//Pools will be filled by contractAccount
-		transferFrom(address contractAccount, address _pool, uint256 _amount)
-		emit fill(_name, contractAccount, _amount);
+		uint amount = IERC20(DAI).balanceOf(contractAccount);
+		IERC20(DAI).transferFrom(address contractAccount, address _pool, uint256 _amount)
+		emit Fill(_name, contractAccount, _amount);
 	}
 
 	//Drain Pool ???
 	function drain(address _pool, uint _amount, string _name ) {
-		//Pools will be drained into contractAccount
-		transferFrom(address _pool, address contractAccount, uint256 _amount)
-		emit drain(_name, contractAccount, _amount);
+		uint amount = IERC20(DAI).balanceOf(_pool); //WHAT? How does this work?
+		IERC20(DAI).transferFrom(address _pool, address contractAccount, uint256 _amount)
+		emit Drain(_name, contractAccount, _amount);
 	}
 
 }

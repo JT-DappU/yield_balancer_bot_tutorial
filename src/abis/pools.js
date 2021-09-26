@@ -3,5 +3,7 @@
 //
 //If you wrapped these in an array, you could probably run a loop function.
 
-ABI_aavePool = "";
-ABI_compoundPool = "";
+export const ABI_aavePool = "";
+export const aavePool_DAI = "";
+export const ABI_compoundPool = "";
+export const compoundPool_DAI = "";
