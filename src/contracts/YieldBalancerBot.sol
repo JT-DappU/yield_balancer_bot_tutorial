@@ -1,9 +1,12 @@
 pragma solidity >=0.4.22 <0.9.0;
 
+
+//import "@openzeppelin/contracts/finance/PaymentSplitter.sol";
+
 contract YieldBalancerBot {
 
-//CONSIDER THIS FOR AUTHENTICATION
-	// address public owner = msg.sender;
+	//This account will hold all the funds
+	address public contractAccount;
 
 	// modifier restricted() {
 	// 	require(
@@ -11,6 +14,10 @@ contract YieldBalancerBot {
 	// 	"This function is restricted to the contract's owner"
 	// 	);
 	// };
+	
+	constructor( address _contractAccount ) public {
+		contractAccount = _contractAccount;
+	}
 	
 	function deposit() {
 		//from = msg.sender;
