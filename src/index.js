@@ -2,25 +2,25 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css'
 import App from './components/App';
+import dappScreen from './components/App';
+import NoWeb3 from './components/App';
+import Connect from './components/App';
+import Deposit from './components/App';
 import * as serviceWorker from './serviceWorker';
 
-//Yield Balancer Bot Tutorial
-const Web3 = require('web3');
-const config = require('./truffle-config.js');
+// //Yield Balancer Bot Tutorial
+// const Web3 = require('web3');
+// const config = require('./truffle-config.js');
 
-//const walletPrivateKey = process.env.WALLET_PRIVATE_KEY;
-const web3 = new Web3('https://mainnet.infura.io/v3/'+process.env.INFURA_API_KEY);
+// //const walletPrivateKey = process.env.WALLET_PRIVATE_KEY;
+// const web3 = new Web3('https://mainnet.infura.io/v3/'+process.env.INFURA_API_KEY);
 
 //REACT STATE CHANGE FUNCTIONS
 // 
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
-if (typeof window.ethereum !== 'undefined') {
-	ReactDOM.render(<no-web3 />, dappScreen);
-} else {
-	ReactDOM.render(<connect />, dappScreen);
-}
+// ReactDOM.render(<rebalancing msg="" />, document.querySelector('.dappScreen') ) ;
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
