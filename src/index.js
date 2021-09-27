@@ -2,10 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css'
 import App from './components/App';
-import dappScreen from './components/App';
-import NoWeb3 from './components/App';
-import Connect from './components/App';
-import Deposit from './components/App';
 import * as serviceWorker from './serviceWorker';
 
 // //Yield Balancer Bot Tutorial
