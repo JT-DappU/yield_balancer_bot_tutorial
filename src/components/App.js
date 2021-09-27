@@ -19,10 +19,12 @@ import './App.css';
 
 //WINDOW
 //const dappScreen = document.querySelector('.dappScreen');
+//
+//
 
-class NoWeb3 extends Component {
+class noWeb3 extends App {
   render() {
-    return ( 
+    return( 
       <div className="no-web3">
         <p className="alert alert-danger">Web3 Connection Not Found</p>
         <p className="card-text">Please download MetaMask to continue.</p>
@@ -30,11 +32,11 @@ class NoWeb3 extends Component {
       </div>
     )
   }
-}
+} 
 
-class Connect extends Component {
+class connect extends App {
   render() {
-    return ( 
+    return( 
       <div className="connect">
         <p className="alert alert-info">Web3 Ready to Connect</p>
         <p className="card-text">Connect to the Dapp and get started.</p>
@@ -42,87 +44,64 @@ class Connect extends Component {
       </div>
     )
   }
-}
+} 
 
-class Rebalancing extends Component {
-  render() {
-    return ( 
-      <div className="rebalancing">
-        <p className="alert alert-info">{this.props.msg}</p> 
-        <div className="container-fluid p-4">
-          <div className="spinner-border text-info p-5 " role="status" >
-            <span className="sr-only">Loading...</span> 
-          </div>
-        </div>
-        <p className="card-text py-2">Please wait while your rebalance is processed.</p>
-        <a href="#" className="btn btn-primary mt-3 d-none finish">Continue</a> 
-      </div>
-    )
-  }
-}
+const rebalance = <div className="rebalancing">
+                    <p className="alert alert-info">Now Checking Yields</p> 
+                    <div className="container-fluid p-4">
+                      <div className="spinner-border text-info p-5 " role="status" >
+                        <span className="sr-only">Loading...</span> 
+                      </div>
+                    </div>
+                    <p className="card-text py-2">Please wait while your rebalance is processed.</p>
+                    <a href="#" className="btn btn-primary mt-3 d-none finish">Continue</a> 
+                  </div>
 
-class Deposit extends Component {
-  render() {
-    return ( 
-      <div className="deposit">
-        <p className="alert alert-success">12345 DAI Available</p> 
-        <div className="input-group mb-3">
-          <div className="input-group-prepend">
-            <span className="input-group-text">DAI</span>
-          </div>
-          <input type="number" step=".01" placeholder="TRANSFER AMOUNT" className="form-control" aria-label="DAI Stablecoin"/>
-        </div>
-        <p className="card-text">Deposit DAI into the contract.</p>
-        <a href="#" className="btn btn-success">Deposit DAI</a> 
-      </div>
-    )
-  }
-}
+const deposit = <div className="deposit">
+                  <p className="alert alert-success">12345 DAI Available</p> 
+                  <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                      <span className="input-group-text">DAI</span>
+                    </div>
+                    <input type="number" step=".01" placeholder="TRANSFER AMOUNT" className="form-control" aria-label="DAI Stablecoin"/>
+                  </div>
+                  <p className="card-text">Deposit DAI into the contract.</p>
+                  <a href="#" className="btn btn-success">Deposit DAI</a> 
+                </div>
 
-class Running extends Component {
-  render() {
-    return ( 
-      <div className="running">
-        <p className="card-text">You are currently earning with <span className="winner">AAVE</span>.</p> 
-        <div className="media">
-          <img src="https://app.compound.finance/compound-components/assets/asset_AAVE.svg" className="col-4" alt="..."/>
-          <div className="media-body">
-            <h5 className="mt-0">AAVE</h5>
-            <div className="alert alert-info">2.86 %APR</div> 
-          </div>
-        </div>
-        <div className="media border-top py-3">
-          <img src="https://app.compound.finance/compound-components/assets/asset_COMP.svg" className="col-4" alt="..."/>
-          <div className="media-body">
-            <h5 className="mt-0">COMPOUND</h5>
-            <div className="alert alert-success">2.86 %APR</div> 
-          </div>
-        </div>
-        <h5 className="alert alert-primary">Total Earnings <span className="earnings">.05</span> DAI</h5> 
-        <a href="#" className="mx-2 btn btn-info">Rebalance</a> 
-        <a href="#" className="mx-2 btn btn-danger">Withdraw</a> 
-      </div>
-    )
-  }
-}
+const running = <div className="running">
+                  <p className="card-text">You are currently earning with <span className="winner">AAVE</span>.</p> 
+                  <div className="media">
+                    <img src="https://app.compound.finance/compound-components/assets/asset_AAVE.svg" className="col-4" alt="..."/>
+                    <div className="media-body">
+                      <h5 className="mt-0">AAVE</h5>
+                      <div className="alert alert-info">2.86 %APR</div> 
+                    </div>
+                  </div>
+                  <div className="media border-top py-3">
+                    <img src="https://app.compound.finance/compound-components/assets/asset_COMP.svg" className="col-4" alt="..."/>
+                    <div className="media-body">
+                      <h5 className="mt-0">COMPOUND</h5>
+                      <div className="alert alert-success">2.86 %APR</div> 
+                    </div>
+                  </div>
+                  <h5 className="alert alert-primary">Total Earnings <span className="earnings">.05</span> DAI</h5> 
+                  <a href="#" className="mx-2 btn btn-info">Rebalance</a> 
+                  <a href="#" className="mx-2 btn btn-danger">Withdraw</a> 
+                </div>
 
-class Withdraw extends Component {
-  render() {
-    return ( 
-      <div className="withdraw">
-        <p className="alert alert-success">12345 DAI Available</p> 
-        <div className="input-group mb-3">
-          <div className="input-group-prepend">
-            <span className="input-group-text">DAI</span>
-          </div>
-          <input type="number" step=".01" placeholder="WITHDRAW AMOUNT" className="form-control" aria-label="DAI Stablecoin"/>
-        </div>
-        <p className="card-text">Withdraw DAI from the contract.</p>
-        <a href="#" className="btn btn-danger">Withdraw DAI</a> 
-      </div>
-    )
-  }
-}
+
+const withdraw =  <div className="withdraw">
+                    <p className="alert alert-success">12345 DAI Available</p> 
+                    <div className="input-group mb-3">
+                      <div className="input-group-prepend">
+                        <span className="input-group-text">DAI</span>
+                      </div>
+                      <input type="number" step=".01" placeholder="WITHDRAW AMOUNT" className="form-control" aria-label="DAI Stablecoin"/>
+                    </div>
+                    <p className="card-text">Withdraw DAI from the contract.</p>
+                    <a href="#" className="btn btn-danger">Withdraw DAI</a> 
+                  </div>
 
 
 
@@ -247,14 +226,12 @@ class Withdraw extends Component {
 //
 class App extends Component {
   constructor(props) {
-    super();
     this.state = {
-      screen: <NoWeb3 />
+      screen: noWeb3,
     }
-    //this.props = 
   }
-  changeScreen = (screen) => {
-    this.setState({screen: screen})
+  static getDerivedStateFromProps(props, state) {
+    return {screen: props.dappScreen };
   }
   render() {
     return (

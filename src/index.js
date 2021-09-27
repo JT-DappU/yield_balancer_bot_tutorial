@@ -16,6 +16,10 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
+if (typeof window.ethereum !== 'undefined') {
+	//ReactDOM.render(<App dappScreen="hello"  />, document.getElementById('root'));
+}
+
 // ReactDOM.render(<rebalancing msg="" />, document.querySelector('.dappScreen') ) ;
 
 // If you want your app to work offline and load faster, you can change
