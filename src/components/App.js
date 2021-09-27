@@ -23,11 +23,73 @@ const compoundContract = new web3.eth.Contract(ABI_compoundPool, process.env.COM
 const dappScreen = document.querySelector('.dappScreen');
 
 //SCREENS
-const no_web3 = document.querySelector('.no_web3');
-const connect = document.querySelector('.connect');
-const rebalancing = document.querySelector('.rebalancing');
-const running = document.querySelector('.running');
-const withdraw = document.querySelector('.withdraw');
+const no_web3 = <div class="no-web3">
+                  <p class="alert alert-danger">Web3 Connection Not Found</p>
+                  <p class="card-text">Please download MetaMask to continue.</p>
+                  <a href="#" class="btn btn-warning">Download MetaMask</a>
+                </div>
+
+const connect = <div class="connect">
+                  <p class="alert alert-info">Web3 Ready to Connect</p>
+                  <p class="card-text">Connect to the Dapp and get started.</p>
+                  <a href="#" onClick="connect()" class="btn btn-primary">Connect to App</a> 
+                </div>;
+
+const rebalancing = <div class="rebalancing">
+                      <p class="alert alert-info">Checking for the best Yield.</p> {/* _rebalancingMsg */}
+                      <div class="container-fluid p-4">
+                        <div class="spinner-border text-info p-5 " role="status" >
+                          <span class="sr-only">Loading...</span> 
+                        </div>
+                      </div>
+                      <p class="card-text py-2">Please wait while your rebalance is processed.</p>
+                      <a href="#" class="btn btn-primary mt-3 d-none finish">Continue</a> {/* _finishRebalanceBTN */}
+                    </div>
+
+const deposit = <div class="deposit">
+                  <p class="alert alert-success">12345 DAI Available</p> {/* _userAvailableDai */}
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">DAI</span>
+                    </div>
+                    <input type="number" step=".01" placeholder="TRANSFER AMOUNT" class="form-control" aria-label="DAI Stablecoin"/>
+                  </div>
+                  <p class="card-text">Deposit DAI into the contract.</p>
+                  <a href="#" class="btn btn-success">Deposit DAI</a> {/* deposit() */}
+                </div>
+
+const running = <div class="running">
+                  <p class="card-text">You are currently earning with <span class="winner">AAVE</span>.</p> {/* _winner */}
+                  <div class="media">
+                    <img src="https://app.compound.finance/compound-components/assets/asset_AAVE.svg" class="col-4" alt="..."/>
+                    <div class="media-body">
+                      <h5 class="mt-0">AAVE</h5>
+                      <div class="alert alert-info">2.86 %APR</div> {/* _aaveAPR */}
+                    </div>
+                  </div>
+                  <div class="media border-top py-3">
+                    <img src="https://app.compound.finance/compound-components/assets/asset_COMP.svg" class="col-4" alt="..."/>
+                    <div class="media-body">
+                      <h5 class="mt-0">COMPOUND</h5>
+                      <div class="alert alert-success">2.86 %APR</div> {/* _compoundAPR */}
+                    </div>
+                  </div>
+                  <h5 class="alert alert-primary">Total Earnings <span class="earnings">.05</span> DAI</h5> {/* _totalEarnings */}
+                  <a href="#" class="mx-2 btn btn-info">Rebalance</a> {/* rebalance() */}
+                  <a href="#" class="mx-2 btn btn-danger">Withdraw</a> {/* withdraw() */}
+                </div>
+
+const withdraw = <div class="withdraw">
+                      <p class="alert alert-success">12345 DAI Available</p> {/* _contractBalance */}
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">DAI</span>
+                        </div>
+                        <input type="number" step=".01" placeholder="WITHDRAW AMOUNT" class="form-control" aria-label="DAI Stablecoin"/>
+                      </div>
+                      <p class="card-text">Withdraw DAI from the contract.</p>
+                      <a href="#" class="btn btn-danger">Withdraw DAI</a> {/* withdrawFunds() */}
+                    </div>;
 
 //PROPS
 _userAvailableDAI = // web3.account.balance
@@ -147,6 +209,8 @@ async function withdraw(contract) {
 async function borrow();
 async function repay();
 
+
+//
 class App extends Component {
   render() {
     return (
@@ -170,112 +234,6 @@ class App extends Component {
                   <p class="card-text">Please download MetaMask to continue.</p>
                   <img src={logo} class="card-img px-5" alt="..."/>
                   <div class="card-body window">
- 
-                {/* IF METAMASK INSTALLED */}
-                  if (typeof window.ethereum !== 'undefined') {
-                    {/* COMPONENT
-                      * Name: Connect_Web3_Screen
-                      * Props: --
-                      * States: --
-                      * Controls: connect(), 
-                    */}
-                    <div class="connect">
-                      <p class="alert alert-info">Web3 Ready to Connect</p>
-                      <p class="card-text">Connect to the Dapp and get started.</p>
-                      <a href="#" onClick="connect()" class="btn btn-primary">Connect to App</a> {/* connect() */}
-                    </div>
-                  } else {
-                    {/* COMPONENT
-                      * Name: Web3_NOTFound_Screen
-                      * Props: --
-                      * States: --
-                      * Controls: -- 
-                    */}
-                    <div class="no-web3">
-                      <p class="alert alert-danger">Web3 Connection Not Found</p>
-                      <p class="card-text">Please download MetaMask to continue.</p>
-                      <a href="#" class="btn btn-warning">Download MetaMask</a>
-                    </div>
-                  }
-
-                    {/* COMPONENT
-                      * Name: Deposit_Funds_Screen
-                      * Props: _userAvailableDAI
-                      * States: --
-                      * Controls: deposit(), 
-                    */}
-                    <div class="deposit">
-                      <p class="alert alert-success">12345 DAI Available</p> {/* _userAvailableDai */}
-                      <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">DAI</span>
-                        </div>
-                        <input type="number" step=".01" placeholder="TRANSFER AMOUNT" class="form-control" aria-label="DAI Stablecoin"/>
-                      </div>
-                      <p class="card-text">Deposit DAI into the contract.</p>
-                      <a href="#" class="btn btn-success">Deposit DAI</a> {/* deposit() */}
-                    </div>
-
-                    {/* COMPONENT
-                      * Name: DappRunning_Screen
-                      * Props: _aaveAPR, _compoundAPR, _winner, _totalEarnings
-                      * States: watchTotalEarnings()
-                      * Controls: rebalance(), withdraw(),
-                    */}
-                    <div class="running">
-                      <p class="card-text">You are currently earning with <span class="winner">AAVE</span>.</p> {/* _winner */}
-                      <div class="media">
-                        <img src="https://app.compound.finance/compound-components/assets/asset_AAVE.svg" class="col-4" alt="..."/>
-                        <div class="media-body">
-                          <h5 class="mt-0">AAVE</h5>
-                          <div class="alert alert-info">2.86 %APR</div> {/* _aaveAPR */}
-                        </div>
-                      </div>
-                      <div class="media border-top py-3">
-                        <img src="https://app.compound.finance/compound-components/assets/asset_COMP.svg" class="col-4" alt="..."/>
-                        <div class="media-body">
-                          <h5 class="mt-0">COMPOUND</h5>
-                          <div class="alert alert-success">2.86 %APR</div> {/* _compoundAPR */}
-                        </div>
-                      </div>
-                      <h5 class="alert alert-primary">Total Earnings <span class="earnings">.05</span> DAI</h5> {/* _totalEarnings */}
-                      <a href="#" class="mx-2 btn btn-info">Rebalance</a> {/* rebalance() */}
-                      <a href="#" class="mx-2 btn btn-danger">Withdraw</a> {/* withdraw() */}
-                    </div>
-
-                    {/* COMPONENT
-                      * Name: Rebalancing_Screen
-                      * Props: _rebalancingMsg, _finishRebalanceBTN
-                      * States: rebalanceCheckingYields(), rebalanceTransferFunds(), rebalanceComplete(), 
-                    */}
-                    <div class="rebalancing">
-                      <p class="alert alert-info">Checking for the best Yield.</p> {/* _rebalancingMsg */}
-                      <div class="container-fluid p-4">
-                        <div class="spinner-border text-info p-5 " role="status" >
-                          <span class="sr-only">Loading...</span> 
-                        </div>
-                      </div>
-                      <p class="card-text py-2">Please wait while your rebalance is processed.</p>
-                      <a href="#" class="btn btn-primary mt-3 d-none finish">Continue</a> {/* _finishRebalanceBTN */}
-                    </div>
-
-                    {/* COMPONENT
-                      * Name: Withdraw_Screen
-                      * Props: _contractBalance
-                      * States: withdrawFunds()
-                    */}
-                    <div class="withdraw">
-                      <p class="alert alert-success">12345 DAI Available</p> {/* _contractBalance */}
-                      <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">DAI</span>
-                        </div>
-                        <input type="number" step=".01" placeholder="WITHDRAW AMOUNT" class="form-control" aria-label="DAI Stablecoin"/>
-                      </div>
-                      <p class="card-text">Withdraw DAI from the contract.</p>
-                      <a href="#" class="btn btn-danger">Withdraw DAI</a> {/* withdrawFunds() */}
-                    </div>
-
 
                   </div>
                 </div>
