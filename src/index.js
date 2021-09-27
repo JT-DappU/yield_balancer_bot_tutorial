@@ -4,6 +4,9 @@ import 'bootstrap/dist/css/bootstrap.css'
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 
+import NoWeb3 from './components/screens/noWeb3.js';
+import Connect from './components/screens/connect.js';
+
 // //Yield Balancer Bot Tutorial
 // const Web3 = require('web3');
 // const config = require('./truffle-config.js');
@@ -14,11 +17,21 @@ import * as serviceWorker from './serviceWorker';
 //REACT STATE CHANGE FUNCTIONS
 // 
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root')); 
+
+const dappScreen = document.querySelector('.dappScreen');
 
 if (typeof window.ethereum !== 'undefined') {
-	//ReactDOM.render(<App dappScreen="hello"  />, document.getElementById('root'));
+	ReactDOM.render(<Connect  />, dappScreen);
+} else {
+	ReactDOM.render(<NoWeb3  />, dappScreen);
 }
+
+function connect() {
+  const userAccount = window.ethereum.request({ method: 'eth_requestAccounts' });
+  ReactDOM.render(userAccount,document.querySelector('.accountAddress'));
+}
+
 
 // ReactDOM.render(<rebalancing msg="" />, document.querySelector('.dappScreen') ) ;
 
