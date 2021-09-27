@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 
 class Rebalance extends Component {
+  msg = this.props.msg;
 
-  if {this.props.msg === "Rebalancing Completed"} {
+  if (msg = "Rebalancing Completed") {
     this.props.btnToggle = "";
   }
   render() {
