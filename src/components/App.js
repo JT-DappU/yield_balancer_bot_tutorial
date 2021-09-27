@@ -170,7 +170,7 @@ class App extends Component {
                   <p class="card-text">Please download MetaMask to continue.</p>
                   <img src={logo} class="card-img px-5" alt="..."/>
                   <div class="card-body window">
-
+ 
                 {/* IF METAMASK INSTALLED */}
                   if (typeof window.ethereum !== 'undefined') {
                     {/* COMPONENT
