@@ -16,6 +16,12 @@ const web3 = new Web3('https://mainnet.infura.io/v3/'+process.env.INFURA_API_KEY
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
+if (typeof window.ethereum !== 'undefined') {
+	ReactDOM.render(<no-web3 />, dappScreen);
+} else {
+	ReactDOM.render(<connect />, dappScreen);
+}
+
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
