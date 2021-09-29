@@ -27,4 +27,4 @@ class Running extends Component {
   }
 }  
 
-export default Runnning;
+export default Running;

@@ -1,6 +1,5 @@
 import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
-
 import Deposit from './deposit.js';
 
 //CONNECT BUTTON
@@ -9,11 +8,6 @@ async function connect() {
   ReactDOM.render(window.ethereum.selectedAddress,document.querySelector('.accountAddress'));
   ReactDOM.render(<Deposit  />, document.querySelector('.dappScreen'));
 }
-
-//ACCOUNT CHANGED
-window.ethereum.on('accountsChanged', function (accounts) {
-  ReactDOM.render(window.ethereum.selectedAddress,document.querySelector('.accountAddress'));
-});
 
 class Connect extends Component {
   render() {
