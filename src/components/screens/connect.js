@@ -5,7 +5,7 @@ import Deposit from './deposit.js';
 //CONNECT BUTTON
 async function connect() {
   const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-  ReactDOM.render(window.ethereum.selectedAddress,document.querySelector('.accountAddress'));
+  //ReactDOM.render(window.ethereum.selectedAddress,document.querySelector('.accountAddress'));
   ReactDOM.render(<Deposit  />, document.querySelector('.dappScreen'));
 }
 

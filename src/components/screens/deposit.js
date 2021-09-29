@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
 
 const Web3 = require('web3');
-const web3 = new Web3('https://mainnet.infura.io/v3/'+process.env.INFURA_API_KEY)
+const web3 = new Web3('https://kovan.infura.io/v3/'+process.env.INFURA_API_KEY)
 
-const accounts = web3.eth.getAccounts()
-const address = accounts[0]
+const accountAddress = window.ethereum.selectedAddress;
+
+const theBalance = web3.eth.getBalance(accountAddress)
 
 class Deposit extends Component {
-  constructor() {
-    super();
+
+  constructor(props) {
+    super(props);
     this.state = {
-      dai: web3.eth.getBalance(address)
-    }
+      dai: theBalance
+    };
   }
   render() {
     return( 
       <div className="deposit">
-        <p className="alert alert-success">{this.state.dai} DAI Available</p> 
+        <p className="alert alert-success">{this.props.dai} DAI Available</p> 
         <div className="input-group mb-3">
           <div className="input-group-prepend">
             <span className="input-group-text">DAI</span>
